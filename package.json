@@ -1,0 +1,23 @@
+{
+  "name": "validador-email-formulario",
+  "version": "1.0.0",
+  "description": "Microserviço para validar os emails para resposta no front.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/estrategia-concursos-marketing/validador-email-formulario.git"
+  },
+  "author": "Israel Mendes",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/estrategia-concursos-marketing/validador-email-formulario/issues"
+  },
+  "homepage": "https://github.com/estrategia-concursos-marketing/validador-email-formulario#readme",
+  "dependencies": {
+    "serverless": "^1.50.0",
+    "serverless-python-requirements": "^5.0.0"
+  }
+}
