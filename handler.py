@@ -62,7 +62,7 @@ def verify(event, context):
             'input': email
         }
         response = {
-            'statusCode': 409,
+            'statusCode': 400,
             'headers': {
                 "Access-Control-Allow-Credentials": True,
                 "Access-Control-Allow-Origin": "*",
