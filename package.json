@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/estrategia-concursos-marketing/validador-email-formulario#readme",
   "dependencies": {
-    "serverless": "^1.50.0",
+    "serverless": "^1.52.0",
     "serverless-python-requirements": "^5.0.0"
   }
 }
