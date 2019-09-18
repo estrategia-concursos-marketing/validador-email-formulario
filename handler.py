@@ -6,9 +6,9 @@ import urllib.parse
 
 """
 
- MICROSERVIÇO para validar as leads do email para o formulário. 
- Lembrando que o REGEX é validado no front, mas aqui é feito pelo MX e SMTP.
- Qualquer PROBLEMA, entre em contato com a equipe de BI e CRM, responsáveis pela produção desse microserviço.
+    MICROSERVIÇO para validar as leads do email para o formulário. 
+    Lembrando que o REGEX é validado no front, mas aqui é feito pelo MX e SMTP.
+    Qualquer PROBLEMA, entre em contato com a equipe de BI e CRM, responsáveis pela produção desse microserviço.
 
 """
 
@@ -18,7 +18,7 @@ import urllib.parse
 #     print(event)
 
 def verify(event, context):
-    email = event['queryStringParameters']['address']
+    print(event)
     # print(email)
     # print("Event Antes da Transformação: ", event)
     
@@ -50,37 +50,73 @@ def verify(event, context):
             return 'notExistingEmail'
 
     # Principal do Microserviço
-    if emailValidator(email) == 'notExistingEmail':
+    if event['queryStringParameters'] == None:
         body = {
-            "message": "Email nao existente. Retornar para o usuario.",
-            "input": email
+            'message': 'Email nao foi apresentado no request',
+            'input': event
         }
         response = {
-            "statusCode": 400,
-            "headers": {
+            'statusCode': 400,
+            'headers': {
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Credentials": True,
                 "Content-Type": "application/json"
             },
-            "body": json.dumps(body)
+            'body': json.dumps(body)
         }
         print(response)
         return response
     else:
-        body = {
-            "message": "Email existente. Continue.",
-            "input": email
-        }
-        response = {
-            "statusCode": 200,
-            "headers": {
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Credentials": True,
-                "Content-Type": "application/json"
-            },
-            "body": json.dumps(body)
-        }
-        print(response)
-        return response
+        email = event['queryStringParameters']['address']
 
+        try:   
+            if emailValidator(email) == 'notExistingEmail':
+                body = {
+                    'message': 'Email nao existente. Retornar para o usuario.',
+                    'input': email
+                }
+                response = {
+                    'statusCode': 400,
+                    'headers': {
+                        "Access-Control-Allow-Origin": "*",
+                        "Access-Control-Allow-Credentials": True,
+                        "Content-Type": "application/json"
+                    },
+                    'body': json.dumps(body)
+                }
+                print(response)
+                return response
+            else:
+                body = {
+                    'message': 'Email existente. Continue.',
+                    'input': email
+                }
+                response = {
+                    'statusCode': 200,
+                    'headers': {
+                        "Access-Control-Allow-Origin": "*",
+                        "Access-Control-Allow-Credentials": True,
+                        "Content-Type": "application/json"
+                    },
+                    'body': json.dumps(body)
+                }
+                print(response)
+                return response
+        except:
+            body = {
+                'message': 'Erro no sistema, confira o que aconteceu no log.',
+                'input': event
+            }
+            response = {
+                'statusCode': 400,
+                'headers': {
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Credentials": True,
+                    "Content-Type": "application/json"
+                },
+                'body': json.dumps(body)
+            }
+            print(response)
+            return response
+            
 # verify(event, context)
