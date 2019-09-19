@@ -12,6 +12,7 @@ import urllib.parse
 
 """
 
+# Para debugar localmente
 # context = '1'
 # with open('resposta.json') as f:
 #     event = json.load(f)
@@ -20,16 +21,16 @@ import urllib.parse
 def verify(event, context):
     print(event)
     # print(email)
-    # print("Event Antes da Transformação: ", event)
     
     def emailValidator(email):
         splitAddress = email.split('@')
         domain = str(splitAddress[1])
 
-        # try:
-        #     records = dns.resolver.query(domain, 'MX')
-        # except:
-        #     return 'notExistingEmail'
+        # Aqui validamos se o domínio existe.
+        try:
+            records = dns.resolver.query(domain, 'MX')
+        except:
+            return 'notExistingEmail'
         
         records = dns.resolver.query(domain, 'MX')
         mxRecord = records[0].exchange
